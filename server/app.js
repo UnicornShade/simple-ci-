@@ -16,6 +16,10 @@ app.get('/build/:buildId', (req, res) => {
   res.render('build', { buildId })
 })
 
+app.get('/notify_agent', (req, res) => { })
+
+app.get('/notify_build_result', (req, res) => { })
+
 app.listen(3000, 'localhost', () => {
   console.log(`CI Server running on http://localhost:3000/`);
 })
