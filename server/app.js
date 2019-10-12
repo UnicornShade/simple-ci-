@@ -1,9 +1,9 @@
 const express = require('express')
 const path = require('path')
 const bodyParser = require('body-parser')
-const error = require('./middleware/errorHandler')
 
-const { notifyAgent } = require('./controllers/notifyAgent')
+const error = require('./middleware/errorHandler')
+const routes = require('./routes')
 
 const app = express()
 
@@ -15,20 +15,7 @@ app.set('view engine', 'pug')
 
 app.use(error.responseError())
 
-app.get('/', (req, res) => {
-  res.render('index')
-})
-
-app.get('/build/:buildId', (req, res) => {
-  const { buildId } = req.params
-
-  res.render('build', { buildId })
-})
-
-app.post('/notify_agent', notifyAgent)
-
-app.post('/notify_build_result', (req, res) => { })
-
+app.use('/', routes)
 
 app.use((_, res) => res.error('Not found', 404))
 app.use(error.errorHandler())
