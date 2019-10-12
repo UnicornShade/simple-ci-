@@ -3,12 +3,16 @@ const path = require('path')
 const bodyParser = require('body-parser')
 const dotenv = require('dotenv')
 
+const db = require('./services/db')
+
 dotenv.config({ path: path.resolve(__dirname, '.env') })
+
 const error = require('./middleware/errorHandler')
 const routes = require('./routes')
 
 const { HOST, PORT } = process.env
 
+db.init()
 const app = express()
 
 app.use(bodyParser.json())
