@@ -1,9 +1,13 @@
 const express = require('express')
 const path = require('path')
 const bodyParser = require('body-parser')
+const dotenv = require('dotenv')
 
+dotenv.config({ path: path.resolve(__dirname, '.env') })
 const error = require('./middleware/errorHandler')
 const routes = require('./routes')
+
+const { HOST, PORT } = process.env
 
 const app = express()
 
@@ -20,6 +24,6 @@ app.use('/', routes)
 app.use((_, res) => res.error('Not found', 404))
 app.use(error.errorHandler())
 
-app.listen(3000, 'localhost', () => {
-  console.log(`CI Server running on http://localhost:3000/`);
+app.listen(PORT, HOST, () => {
+  console.log(`CI Server running on http://${HOST}:${PORT}/`);
 })
