@@ -13,5 +13,6 @@ exports.init = () => db.defaults({ builds: [] }).write()
 
 const builds = db.get('builds')
 exports.addBuild = build => builds.push(build).write()
-exports.showBuild = id => builds.find({ id }).value()
-exports.showBuilds = builds.value()
+exports.getBuild = id => builds.find({ id }).value()
+exports.getBuilds = () => builds.value()
+

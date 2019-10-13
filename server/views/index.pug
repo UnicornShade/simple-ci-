@@ -6,4 +6,12 @@ html(lang="en")
     meta(http-equiv="X-UA-Compatible", content="ie=edge")
     title Document
   body
-    | index page
+    div
+    div
+      h3 Builds
+      table: tbody
+        each build in builds
+          tr
+            td: a(href=`/build/${build.id}`)= build.id
+            td= build.status
+

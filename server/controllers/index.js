@@ -1,3 +1,7 @@
+const { getBuilds } = require('../services/db')
+
 exports.show = (req, res) => {
-  res.render('index')
+  const builds = getBuilds()
+
+  res.render('index', { builds })
 }
