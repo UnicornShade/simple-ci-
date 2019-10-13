@@ -9,16 +9,20 @@ module.exports = async ({ repo, buildId, command, hash }) => {
 
   try {
     //todo создавать папку заранее и задать ее как рабочую для гита
+    console.log(`${buildId}: Cloning repo ${repo}`)
     await git().clone(repo, repoPath)
+    console.log(`${buildId}: Checkout to ${hash}`)
     await git(repoPath).checkout(hash)
 
+    console.log(`${buildId}: Running: ${command}`)
     const { status, stdout, stderr } = await runCommand(command, repoPath)
+    console.log(`${buildId}: Finished`)
 
     notifyServer({ status, stdout, stderr, buildId })
   } catch (e) {
     notifyServer({ buildId, status: 'fail', stderr: e.message })
   } finally {
-    rimraf(repoPath, e => console.error(e))
+    rimraf(repoPath, err => err && console.error(err))
   }
 }
 

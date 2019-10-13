@@ -12,7 +12,7 @@ exports.run = async (req, res) => {
   const { address, id: buildId } = agent.registerBuild()
 
   try {
-    console.log('Delegate to ', address)
+    console.log(`Send commit hash: ${hash}; commands: ${command} to ${address}`)
     await fetch(`${address}/build`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
