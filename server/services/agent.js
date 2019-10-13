@@ -21,15 +21,17 @@ class Agent {
   }
 
   removeBuild = buildId => {
-    const stopTime = Date.now()
+    const endTime = Date.now()
 
     const agent = this.#agents.find(agent => agent.builds.has(buildId))
 
     if (!agent) throw new Error('Build not found')
 
+    const startTime = agent.builds.get(buildId)
+
     agent.builds.delete(buildId)
 
-    return { stopTime }
+    return { endTime, startTime }
   }
 
   #getLeastLoadedAgent = () => {

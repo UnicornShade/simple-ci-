@@ -5,7 +5,7 @@ const fetch = require('node-fetch')
 const rimraf = require('rimraf')
 
 module.exports = async ({ repo, buildId, command, hash }) => {
-  const repoPath = path.resolve(__dirname, '..', buildId)
+  const repoPath = path.resolve(__dirname, '../builds', buildId)
 
   try {
     //todo создавать папку заранее и задать ее как рабочую для гита
@@ -18,7 +18,7 @@ module.exports = async ({ repo, buildId, command, hash }) => {
   } catch (e) {
     notifyServer({ buildId, status: 'fail', stderr: e.message })
   } finally {
-    rimraf(repoPath)
+    rimraf(repoPath, e => console.error(e))
   }
 }
 
@@ -35,5 +35,8 @@ const notifyServer = ({ buildId, stderr = '', stdout = '', status }) => {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ buildId, status, stderr, stdout })
+  }).catch(error => {
+    console.error(error)
+    process.exit(1)
   })
 }

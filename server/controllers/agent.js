@@ -1,4 +1,5 @@
 const agent = require('../services/agent')
+const db = require('../services/db')
 
 exports.notifyAgent = (req, res) => {
   const { host, port } = req.body
@@ -12,6 +13,10 @@ exports.notifyAgent = (req, res) => {
 
 exports.notifyBuildResult = (req, res) => {
   const { buildId, status, stdout, stderr } = req.body
+
+  const { startTime, endTime } = agent.removeBuild(buildId)
+
+  db.addBuild({ id: buildId, status, stdout, stderr, startTime, endTime })
 
   res.sendStatus(200)
 }

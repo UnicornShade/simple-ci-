@@ -8,12 +8,12 @@ html(lang="en")
   body
     h2 Build№ #{build.id}
 
-    span Date: #{new Date(parseInt(build.startDate))} — #{new Date(parseInt(build.endDate))}
+    span Date: #{new Date(parseInt(build.startTime))} — #{new Date(parseInt(build.endTime))}
     br
     span Status: #{build.status}
-    br
-    span
-      | Output:&nbsp;
+    pre
+      | Output:
+      br
       if build.stdout !== undefined
         = build.stdout
       else
