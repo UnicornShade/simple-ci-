@@ -12,10 +12,10 @@ exports.run = async (req, res) => {
   const { address, id: buildId } = agent.registerBuild()
 
   try {
-    await fetch(address, {
+    await fetch(`${address}/build`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ buildId, repo, command })
+      body: JSON.stringify({ buildId, repo, command, hash })
     })
 
     res.redirect('/')
