@@ -1,3 +1,5 @@
+const { getBuild } = require('../services/db')
+
 exports.run = (req, res) => {
   res.send(200)
 }
@@ -5,5 +7,7 @@ exports.run = (req, res) => {
 exports.show = (req, res) => {
   const { buildId } = req.params
 
-  res.render('build', { result: 'build result text', buildId })
+  const build = getBuild(buildId)
+
+  res.render('build', { build })
 }

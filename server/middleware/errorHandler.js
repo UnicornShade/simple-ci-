@@ -14,8 +14,10 @@ exports.responseError = () => {
 
 exports.errorHandler = () => {
   return (err, _req, res, _next) => {
-    const { status = 500, error = {} } = err
-    const message = error.message || DEFAULT_ERROR_MESSAGE
+    const { status = 500, error } = err
+    const { message = DEFAULT_ERROR_MESSAGE } = error || {}
+
+    console.error(error || err)
 
     res.status(status)
     res.json({ status, message })

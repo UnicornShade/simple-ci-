@@ -6,4 +6,15 @@ html(lang="en")
     meta(http-equiv="X-UA-Compatible", content="ie=edge")
     title Document
   body
-    h1 Build #{buildId}
+    h2 Build№ #{build.id}
+
+    span Date: #{new Date(parseInt(build.startDate))} — #{new Date(parseInt(build.endDate))}
+    br
+    span Status: #{build.status}
+    br
+    span
+      | Output:&nbsp;
+      if build.stdout !== undefined
+        = build.stdout
+      else
+        = build.stderr
