@@ -9,7 +9,7 @@ class Agent {
     this.#agents.push({ address, builds: new Map() })
   }
 
-  startBuild = () => {
+  registerBuild = () => {
     const startTime = Date.now()
     const buildId = uuid()
 
@@ -17,10 +17,10 @@ class Agent {
 
     agent.builds.set(buildId, startTime)
 
-    return { id: buildId, startTime }
+    return { id: buildId, address: agent.address }
   }
 
-  stopBuild = buildId => {
+  removeBuild = buildId => {
     const stopTime = Date.now()
 
     const agent = this.#agents.find(agent => agent.builds.has(buildId))

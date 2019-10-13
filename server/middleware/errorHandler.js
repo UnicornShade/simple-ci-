@@ -3,7 +3,9 @@ const DEFAULT_ERROR_MESSAGE = 'Internal Server Error'
 exports.responseError = () => {
   return (req, res, next) => {
     res.error = (message = DEFAULT_ERROR_MESSAGE, status = 500) => {
-      const error = new Error(message)
+      const error = typeof message === 'string'
+        ? new Error(message)
+        : message
 
       next({ error, status })
     }

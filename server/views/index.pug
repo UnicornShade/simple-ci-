@@ -1,12 +1,25 @@
 <!DOCTYPE html>
-html(lang="en")
+html(lang='en')
   head
-    meta(charset="UTF-8")
-    meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    meta(http-equiv="X-UA-Compatible", content="ie=edge")
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(http-equiv='X-UA-Compatible', content='ie=edge')
     title Document
   body
     div
+      form(action='/build' method='post')
+        label
+          span Commit hash&nbsp;
+          input(name='hash')
+        br
+        br
+        label
+          span Command&nbsp;
+          input(name='command')
+        br
+        br
+        button(type='submit') Run build
+
     div
       h3 Builds
       table: tbody

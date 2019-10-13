@@ -1,7 +1,28 @@
-const { getBuild } = require('../services/db')
+const fetch = require('node-fetch')
 
-exports.run = (req, res) => {
-  res.send(200)
+const { getBuild } = require('../services/db')
+const agent = require('../services/agent')
+
+exports.run = async (req, res) => {
+  const { hash, command } = req.body
+  const repo = process.env.REPOSITORY_ADDRESS
+
+  if (!hash || !command) res.error('All fields must be filled', 400)
+
+  const { address, id: buildId } = agent.registerBuild()
+
+  try {
+    await fetch(address, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ buildId, repo, command })
+    })
+
+    res.redirect('/')
+  } catch (e) {
+    agent.removeBuild(buildId)
+    res.error(e, 500)
+  }
 }
 
 exports.show = (req, res) => {
